@@ -12,7 +12,8 @@ typedef struct SeqStack
 	SeqStack *s;
 	s=(SeqStack*)malloc(sizeof(SeqStack));
 	s->top =0;
-}
+	return s;
+ }
 int Empty_SeqStack(SeqStack *s)
 {
 	if(s->top ==0)

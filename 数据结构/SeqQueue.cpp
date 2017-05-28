@@ -39,6 +39,7 @@ int inSeqQueue(seqQueue *s,char x)
 		s->data [s->rear]=x;
 		s->rear++;
 	}
+}
 //	while(s->front !=0)
 //	{
 //		for(int i=s->front ;i<=s->rear;i++)
@@ -47,9 +48,8 @@ int inSeqQueue(seqQueue *s,char x)
 //		}
 //		s->front --;
 //		s->rear --;
-//	}	//元素前移，节省空间 ，请忽略 
-	
-}
+//	}	//元素前移，节省空间 ，请忽略 	
+
 int outSeqQueue (seqQueue *s, char &x)
 {
 	if(emptySeqQueue(s))
