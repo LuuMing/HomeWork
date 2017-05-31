@@ -71,8 +71,18 @@ typedef int adjmatrix[m0][m0];
 /*
 链接表 
 */
-
-
+typedef struct adjnode
+{
+	int vexnum;//每一个点都有编号 
+	int weight;//每一个点的权 
+	struct adjnode *next;//下一个 
+} adjnode;//定义邻接节点 
+typedef struct vexnode
+{
+	char vexdata;
+	adjnode * link;
+}vexnode;//定义表头节点 
+typedef vexnode A[m0];//定义表头 向量 
 
 int main()
 {
