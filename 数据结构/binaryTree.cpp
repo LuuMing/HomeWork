@@ -44,25 +44,33 @@ void  lastorder(btnode *b)   //后序遍历
 }
 
 int depth(btnode *b)//求二叉树的深度
-{int depthl,depthr;
- if( b->left == NULL && b->right == NULL) return 0;
- else
-{ depthl = depth( b->left );
-  depthr = depth( b->right );
- if(depthl>depthr) return(depthl+1);
- else 
- return(depthr+1);
-}
+{
+	int depthl, depthr;
+	if( b->left == NULL && b->right == NULL) 
+		return 1;
+	else
+	{ 	
+		depthl = depth( b->left );
+		depthr = depth( b->right );
+		if(depthl>depthr) 
+		return(depthl+1);
+		else 
+		return(depthr+1);
+	}
+
 }
 
 int node_counter(btnode *b)//求二叉树的总结点数
-{int cl,cr;
- if(!b) return 0;
+{
+int cl, cr;
+if( b==NULL ) 
+ 	return 0;
  else if(b->left ==NULL && b->right == NULL)
  {
  	return 1;
  }
-else {
+else 
+{
  cl=node_counter(b->left);
  cr=node_counter(b->right);
  return( 1+cl + cr );

@@ -42,7 +42,7 @@ return  head;
 int  FindList(node * head, int x)// 在单链表中查找值为x的结点
 {node *p;
  p=head->next;//跳过头结点
- 	while((p !=NULL)&&(p->data !=x)   ) 
+ 	while( (p !=NULL)&&(p->data !=x) ) 
  	{
   				(p=p->next  );
     }
@@ -108,7 +108,7 @@ int main()
  scanf("%d",&x);
  n=FindList(list, x);//查找值为x的元素
  printf("3---在单链表中第i个结点之后插入值为x的结点，请输入i和x的值：");
- scanf("%d,%d",&i,&x);
+ scanf("%d%d",&i,&x);
  InsertList(list, i, x);// 在单链表中第i个结点之后插入值为x的结点
  outlist(list->next );
  printf("4---删除单链表中值为x的结点，请输入x的值：");
