@@ -1,0 +1,14 @@
+use 学生选课表
+select * from 学生 
+/*全体*/
+select 学号 from 学生
+/*某列*/
+select 姓名 as name from 学生
+/*别名*/
+
+select distinct 性别  from 学生 
+/*唯一值*/
+
+select 姓名 as name,性别 as sex from 学生
+/*别名*/
+

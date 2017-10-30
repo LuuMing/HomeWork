@@ -1,0 +1,12 @@
+use 学生选课表
+DELETE FROM 学生
+INSERT  学生 VALUES (151004113,'卢明','男',18,'物理系')
+INSERT  学生 VALUES (151004124,'杨鸡鸡','男',18,'物理系')
+INSERT  学生 VALUES (151004122,'许俊杰','男',18,'物理系')
+INSERT  学生 VALUES (151004116,'王继刚','男',18,'物理系')
+INSERT  学生 VALUES (151004123,'杨昊','男',null,null)
+
+
+UPDATE 学生 SET 姓名 = '杨佳佳' WHERE 姓名 = '杨鸡鸡'
+
+INSERT 课程 values ()
