@@ -20,7 +20,7 @@ create table 学生
 学号 char(10) constraint PK_学生_学号  primary key,
 姓名 char(10) constraint U_学生_姓名  not null,
 性别 char(2)  not null constraint CK_学生_性别 check(性别 in ('男','女')),
-年龄 int  ,
+年龄 int,
 系名 char(50),
 )
 
@@ -34,7 +34,7 @@ create table 课程
 
 create table 学生选课
 (
-学号 char(10) references 学生()
-课程号 
+学号 char(10) references 学生(学号),
+课程号 char(10) references 课程(课程号) 
 成绩 int constraint 学生选课_成绩
 )
