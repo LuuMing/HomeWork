@@ -1,7 +1,7 @@
 data segment
-dat db 1,-2,3,-4,5,-6,7,-8,9,-10
+dat db 100,-100,-100,100
 count equ $-dat
-result db 0
+result dw 0
 data ends
 code segment
      assume cs:code,ds:data
@@ -15,9 +15,10 @@ loop_:
      mov bl,[si]
      call abs_of_bl
      add al,bl
+     adc ah,00H
      inc si
      loop loop_
-     mov result,al
+     mov result,ax
      
      mov ah,4ch
      int 21H
