@@ -1,5 +1,5 @@
 data segment
-ARY dw 10,1,2,3,4,5,6,7,8,9,10
+ARY dw 3,1,2,-3
 sum dw 0
 data ends
 code segment
@@ -15,14 +15,21 @@ start:
 sum_ proc near          ;求和子程序
 	push cx        ;入口 ARY
 	push si        ;出口 AX
+	push bx
 	mov cx,ARY
 	lea si,ARY 
 	mov ax,0000H
 	
 loop_:  
 	add si,2
-	add ax,[si]
+	mov bx,[si]
+	cmp bx,0
+	jnl abs
+	neg bx
+	abs:
+	add ax,bx
 	loop loop_ 
+	pop bx
 	pop si
 	pop cx 
 	ret 
