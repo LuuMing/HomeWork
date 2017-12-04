@@ -24,3 +24,4 @@ select book_cate.num,book_cate.name,count(*) as 总数量 from book,book_cate wh
 
 select * from reader,borrow_relation where (borrow_relation.reader_num = reader.num and reader.num = 'r001');
 
+/*select reader_num,count(*) as 借书总数 from borrow_relation where reader_num='r001' group by reader_num*/
