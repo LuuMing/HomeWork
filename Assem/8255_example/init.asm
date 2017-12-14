@@ -20,7 +20,7 @@ loop_:
 	mov ah,4ch
 	int 21H
 
-delay proc delay
+delay proc near
 	push cx
 	mov bx,00ffH
 delay_0:
