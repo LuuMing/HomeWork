@@ -1,0 +1,8 @@
+#!/bin/bash
+#Program
+#this program shows "Hello world"
+echo "Hello World.\n"
+echo "you can use sh script-file run this program.\n"
+echo "or you can use chmod u+x script-file.\n"
+echo "and use ./script-file to run this program"
+exit 0
