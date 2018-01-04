@@ -1,0 +1,18 @@
+#!bin/bash
+#############
+filename=./file
+if [ -f $filename ];then
+echo "The file is exist"
+fi
+############
+if [ -f $filename ];then
+echo "the file is exist"
+else
+echo "the file is not exist"
+fi
+################
+if test -f $filename;then
+echo "The file is exist"
+else
+echo "The file is not exist"
+fi

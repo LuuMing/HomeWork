@@ -1,0 +1,4 @@
+#!bin/bash
+a=this
+b=this
+[ $a == $b ]&&echo "yes" || echo "No"

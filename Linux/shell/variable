@@ -1,0 +1,22 @@
+#!bin/bash
+#program
+
+v1=ubuntu
+echo $v1
+#simple variable
+echo $string
+#string
+a=10
+b=20
+#number,must use $
+echo $(($a+$b))
+echo $(($a*$b))
+#length of string
+string="This is an shell script test."
+echo "the length of string is" ${#string}
+#slice the string
+echo ${string:4:5}
+#delete
+echo ${string#This is}
+echo ${string#T*.}
+echo ${string##s*}
