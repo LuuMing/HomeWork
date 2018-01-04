@@ -1,0 +1,12 @@
+#!/bin/bash
+echo "Please input an number"
+read number
+case $number in
+1)
+	echo "Your input is 1";;
+2)
+	echo "Your input is 2";;
+*)
+	echo "ERROR"
+
+esac

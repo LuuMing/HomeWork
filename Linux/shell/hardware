@@ -1,0 +1,17 @@
+#!bin/bash
+#program
+
+echo "please input your hardware."
+read hd
+if [ $hd == cpu ];then
+echo "Your cpu info is"
+cat /proc/cpuinfo
+elif [ $hd == mem ];then 
+echo "Your mem info is"
+cat /proc/meminfo
+elif [ $hd == hard ];then
+echo "Your hard info is"
+df -h
+else
+echo "error"
+fi
