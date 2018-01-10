@@ -9,12 +9,12 @@ code segment
 	mov ds,ax
 start:
 	mov cx,count
-	lea si,music
+	lea bp,music
 loop_:
 	mov dx,0303H
-	mov al,00001100B       ;PC6置零
+	mov al,00001100B       ;PC6置1
 	out dx,al
-	mov al,00000000B       ;PC0置零
+	mov al,00000000B       ;PC0置1
 	out dx,al             
 			      ;8255初始化
 	
@@ -22,20 +22,21 @@ loop_:
 	mov al,10110110B       ;10--计数器2  11--先读/写低字节 011--方式3 0--二进制数
 	out dx,al
 	                      ;8253初始化
-	mov ax,[si]
+	mov ax,[bp]
 	mov dx,0306H
 	out dx,al
 	mov al,ah
-	out dx,al       
-			      ;发声
-	mov dx,0303H
-	mov al,00001101B       ;PC6置1
-	out dx,al
-	mov al,00000001B
-	out dx,al	      ;PC1置1
-	
+	out dx,al      	      ;发声
+
 	call delay            ;延迟
-	inc si
+	mov dx,0303H
+	mov al,00001100B       ;PC6置1
+	out dx,al
+	mov al,00000000B
+	out dx,al	      ;PC1置1
+
+	inc bp
+	inc bp
 	loop loop_
 	
 	mov ah,4ch
