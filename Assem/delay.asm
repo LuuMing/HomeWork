@@ -1,4 +1,4 @@
-delay proc delay
+delay proc near
 ;in pram:bx
 ;
 ;
