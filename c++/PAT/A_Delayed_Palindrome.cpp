@@ -47,7 +47,7 @@ int main()
 		cout<<num<<" + "<<reverse_number(num)<<" = "<<sum<<endl;
 		num = sum;	
 	}
-	cout<<"Not found in 10 iterations";
+	cout<<"Not found in 10 iterations.";
 	return 0;
 }
 
