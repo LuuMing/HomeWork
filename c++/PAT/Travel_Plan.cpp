@@ -80,7 +80,15 @@ class Path
 		{
 			return this->total_cost() < i.total_cost();
 		}
-		
+		void debug()
+		{
+			cout<<"****************"<<endl;
+			for(list<int>::iterator i = p.begin(); i != p.end(); i++)
+			{
+				cout<<*i<<' '<<"->";
+			}
+			cout<<endl<<"****************"<<endl;
+		}
 };
 void view_map(int **& m)
 {
@@ -134,37 +142,40 @@ Path find_path(int s,int e)
 	init_matrix(temp_cost_matrix,N);
 	matrix_copy(temp_dist_matrix,dist_matrix,N);
 	matrix_copy(temp_cost_matrix,dist_matrix,N);
-	Path p(s);                                       //floy算法，插值 
+	
 	for(int i = 0 ; i < N; i++)
 	{
-		if( temp_dist_matrix[s][e] > temp_dist_matrix[s][i] + temp_dist_matrix[i][e] )
+		for(int j = 0 ;j < N; j++)
 		{
-			p.add(i);
-			temp_dist_matrix[s][e] = temp_dist_matrix[s][i] + temp_dist_matrix[i][e];
-			temp_cost_matrix[s][e] = temp_cost_matrix[s][i] + temp_cost_matrix[i][e];
-			continue;
-		}
-		if( temp_dist_matrix[s][e] == temp_dist_matrix[s][i] + temp_dist_matrix[i][e])
-		{                                                                 
-			Path another_way(p);                     //若有次最短路则添加至list 
-			another_way.pop();
-			another_way.add(i);
-			short_way.push_back(another_way);
+			Path p(i);
+			for(int k = 0; k < N; k++)
+			{
+				if( temp_dist_matrix[i][j] > temp_dist_matrix[i][k] + temp_dist_matrix[k][j] )
+				{
+					p.add(k);
+					temp_dist_matrix[i][j] = temp_dist_matrix[i][j] + temp_dist_matrix[k][j];
+				//	continue;
+				}
+				
+//				if( temp_dist_matrix[i][j] == temp_dist_matrix[i][k] + temp_dist_matrix[j][k])
+//				{                                                                 
+//					Path another_way(p);                     //若有次最短路则添加至list 
+//					another_way.pop();
+//					another_way.add(k);
+//					short_way.push_back(another_way);
+//				}			
+			}
+			p.add(j);
+			short_way.push_back(p);
 		}
 	} 
-	p.add(e);                         //主最短路添加末尾 
-	for(list<Path>::iterator i = short_way.begin(); i!= short_way.end(); i++)
+
+	for(list<Path>::iterator i = short_way.begin(); i!=short_way.end();i++)
 	{
-		(*i).add(e);                 //每条次最短路添加上末尾 
+		(*i).debug();
 	}
-	short_way.push_back(p);          //主最短路加入list 
 	short_way.sort();                //重载<让cost对最短路的排序
 	//////////////////////
-//	for(list<Path>::iterator i = short_way.begin(); i!= short_way.end(); i++)
-//	{
-//		(*i).output();
-//		cout<<endl;
-//	}
 //	cout<<"中间矩阵是:"<<endl;
 //	view_map(temp_dist_matrix);
 //	cout<<"*********";
