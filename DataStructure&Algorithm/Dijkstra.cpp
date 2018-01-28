@@ -11,14 +11,16 @@ int D = 0;
 
 int * pathfind(int s)
 {
-	int *D = new int [N];
+	int *D = new int [N];               //中间向量D 
+	int *Path = new int [N];            //用Path记录路径
 	set<int> Set;
 	Set.insert(s);                      //初始顶点加入集合 
 	for(int i = 0; i < N;i++)
 	{
-		D[i] = dist_matrix[s][i];
-	}                                   //生成中间向量
-	while( Set.size() < N)              //not all node in Set ,DO!
+		D[i] = dist_matrix[s][i];      //生成中间向量
+		Path[i] = 0;                   //初始化Path 
+	}                                   
+	while( Set.size() < N)              //not all node in Set, DO!
 	{
 		int num = 0;
 		int dist = inf;
@@ -32,13 +34,22 @@ int * pathfind(int s)
 		}                                
 		for(int i = 0; i < N; i++)
 		{
-			if( Set.find(i)==Set.end() )                     //对于所有未加入集合的点 
+			int temp = dist + dist_matrix[num][i];
+			if( Set.find(i)==Set.end() && temp < D[i])                     //对于所有未加入集合的点,且可被num点松弛 
 			{
-				D[i] = min(D[i],D[num]+dist_matrix[num][i]);   //重点来了，松弛操作 
+				D[i] = temp;                                   //重点来了，松弛操作
+				Path[i] = num;                                 //记录num点，意思为顶点到i之间经过num 
 			}                             
-		}                                              
+		}                           
 		Set.insert(num);
 	}
+	cout<<"Path:";
+	for(int i = 0; i < N;i++)
+	{
+		cout<<Path[i]<<" ";
+	}                   
+		cout<<endl;
+
 	return D;                       //D[i]即为顶点到i点的最短距离 	                                      
 }
 
@@ -57,6 +68,7 @@ void init_matrix(int**& matrix,int N)
 			if(i==j)
 			{
 				matrix[i][j] = 0;
+				continue;
 			}
 			matrix[i][j] = inf;
 		}
