@@ -46,7 +46,7 @@ class List:public list<int>              //list派生类 代表一条路径
 		}
 };
 
-list<int>* pathfind(int s)               //Dijkstra算法，返回前驱节点容器 
+list<int>* Dijkstra(int s)               //Dijkstra算法，返回前驱节点容器 
 {
 	int *D = new int [N];                //中间向量D 
 	list<int>* Path = new list<int>[N];  //记录前驱节点 
@@ -182,7 +182,7 @@ int main()
 	//	view_map(cost_matrix);
 	 
 	/*找出到start的所有前驱节点*/
-	pre = pathfind(S);
+	pre = Dijkstra(S);
 	/*找出所有路径 */
 	list<List> all_path = find_all_path(D);
 	/* 输出 */
