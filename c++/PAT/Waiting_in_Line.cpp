@@ -91,7 +91,7 @@ int main()
 					windows[i].pop();
 					if(!outline.empty())
 					{
-						windows[i].push(outline.front());
+						windows[i].push(outline.front());                  //it warrant outline customer could find shortest query.
 						outline.pop();
 					}
 				}

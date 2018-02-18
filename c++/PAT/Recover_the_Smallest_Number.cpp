@@ -27,9 +27,9 @@ int main()
 		output += i;
 	}
 	int num = 0;
-	for(;num < output.size()-1;num++)
+	for(;num < output.size()-1;num++)//find where number begins.Avoid 0XXXXX
 	{
-		if(output.at(num)!='0')
+		if(output.at(num)!='0')     
 			break;
 	}
 	cout<<output.substr(num);
