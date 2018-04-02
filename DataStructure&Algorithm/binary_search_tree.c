@@ -19,14 +19,14 @@ BinTree Insert(BinTree BST, ElementType X)
 	}
 	return BST;
 }
-BinTree Delete(BinTree BST, ElementType X)
+BinTree Delete(BinTree BST, ElementType X)//删除元素,返回根节点
 {
 	Position temp; 
 	if(!BST)
 	{
 		printf("Not Found\n");
 	}	
-	else if( BST->Data > X)
+	else if( BST->Data > X)           //元素大于当前节点,递归删除左子树
 	{
 		BST->Left = Delete(BST->Left,X);
 	}
@@ -34,27 +34,29 @@ BinTree Delete(BinTree BST, ElementType X)
 	{
 		BST->Right = Delete(BST->Right,X);
 	}
-	else
+	else				 //当前节点为待删除节点
 	{
-		if( BST->Left && BST->Right )
+		if( BST->Left && BST->Right ) //have two child
 		{
-			temp = FindMin(BST->Right);
-			BST->Data =  temp ->Data;
-			BST->Right = Delete(BST->Right,BST->Data);
-			 	
+			//temp = FindMin(BST->Right);      		 //find max of it's Left tree/ or find min of it's left tree as temp
+			//BST->Data =  temp ->Data;	   		 //use temp to replace the root
+			//BST->Right = Delete(BST->Right,BST->Data);	 //Delete Left / Right tree recursively
+			 temp = FindMax(BST->Left);
+			 BST->Data = temp -> Data;
+			 BST -> Left = Delete(BST->Left,BST->Data);	 	
 		}
-		else
+		else                          //have one/no child, just replace it's root
 		{
-			temp = BST;
-			if(!BST->Left)
+			//temp = BST;
+			if(BST->Left)
 			{
-				BST = BST->Right;
+				BST = BST->Left;
 			}
 			else 
 			{
-				BST = BST ->Left;
+				BST = BST ->Right;
 			}
-			free(temp);
+			//free(temp);
 		}
 	}
 	return BST;
