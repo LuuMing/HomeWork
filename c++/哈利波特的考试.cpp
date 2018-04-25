@@ -1,38 +1,26 @@
 #include<iostream>
+#include<string.h>
 using namespace std;
 #define MAX 101
 #define INF 999999
 int N;
 int M;
 int adj[MAX][MAX];
-bool visited[MAX];
-int min_l = INF;
-int min_v;
-int connected = false;
-void DFS(int v,int pre_v,int count,int m,int root)
+int D[MAX][MAX];
+void floyd()
 {
-	visited[v] = true;
-	if(adj[v][pre_v] > m)
+	memcpy(D,adj,MAX*MAX*sizeof(int));
+	for(int k = 1; k <= N;k++)
 	{
-		m = adj[v][pre_v];
-	}
-	if(count == N-1)
-	{
-		connected = true;
-		if(m <= min_l)
+		for(int i = 1; i <= N;i++)
 		{
-			min_l = m;
-			min_v = root;
+			for(int j = 1;j <= N;j++)
+			{
+				if(D[i][j] > D[i][k]+D[k][j])
+					D[i][j] = D[i][k] + D[k][j];
+			}
 		}
 	}
-	for(int i = 1; i <= N;i++)
-	{
-		if(adj[v][i]!=INF && !visited[i])
-		{
-			DFS(i,v,count+1,m,root);
-		}
-	}
-	visited[v] = false;
 }
 int main()
 {
@@ -45,18 +33,38 @@ int main()
 	{
 		int a,b,c; cin >> a >> b >> c;
 		adj[a][b] = adj[b][a] = c;
-		if(i==0)
+	}
+	floyd();
+	bool connected = true;
+	int num = -1;
+	int length = INF;
+	for(int i = 1; i <= N;i++)
+	{
+		int tem = -1;
+		for(int j = 1; j <= N;j++)
 		{
-			v = a;
+			if(D[i][j] > tem)
+			{
+				tem = D[i][j];
+			}
+			if(D[i][j] == INF)
+			{
+				connected = false;
+				break;
+			}
+		}
+		if(!connected)
+			break;
+		else if (tem < length)
+		{
+			length = tem;
+			num = i;
 		}
 	}
-	for(int i = 1; i <=  N;i++)
-	{	
-		for(int i = 1; i<= N;i++)visited[i] = false;
-		DFS(i,i,0,-1,i);
-	}
-	if(connected)
-	cout << min_v << min_l ;
+	if(!connected)
+		cout << 0;
 	else
-	cout << 0;
+	{
+		cout << num <<' '<<length;  
+	}
 }
