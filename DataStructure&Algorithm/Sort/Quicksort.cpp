@@ -9,7 +9,7 @@ void Qsort(int a[], int low, int high )
     }
     int first = low;
     int last = high;
-    int key = a[first];/*ÓÃ×Ö±íµÄµÚÒ»¸ö¼ÇÂ¼×÷ÎªÊàÖá*/
+    int key = a[first];/*ç”¨å­—è¡¨çš„ç¬¬ä¸€ä¸ªè®°å½•ä½œä¸ºæž¢è½´*/
  
     while(first < last)
     {
@@ -18,7 +18,7 @@ void Qsort(int a[], int low, int high )
             --last;
         }
  
-        a[first] = a[last];/*½«±ÈµÚÒ»¸öÐ¡µÄÒÆµ½µÍ¶Ë*/
+        a[first] = a[last];/*å°†æ¯”ç¬¬ä¸€ä¸ªå°çš„ç§»åˆ°ä½Žç«¯*/
  
         while(first < last && a[first] <= key)
         {
@@ -26,9 +26,9 @@ void Qsort(int a[], int low, int high )
         }
          
         a[last] = a[first];    
-/*½«±ÈµÚÒ»¸ö´óµÄÒÆµ½¸ß¶Ë*/
+/*å°†æ¯”ç¬¬ä¸€ä¸ªå¤§çš„ç§»åˆ°é«˜ç«¯*/
     }
-    a[first] = key;/*ÊàÖá¼ÇÂ¼µ½Î»*/
+    a[first] = key;/*æž¢è½´è®°å½•åˆ°ä½*/
     Qsort(a, low, first-1);
     Qsort(a, first+1, high);
 }
