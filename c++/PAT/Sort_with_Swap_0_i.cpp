@@ -3,34 +3,12 @@
 #include<cstdio>
 using namespace std;
 int N;
-int n;
+int sum;
 int num[100001];
-
-void to_p_zero(int p)
-{
-	if(p == 0)
-	{
-		return ;
-	}
-	else
-	{
-		for(int i = 0; i < N;i++)
-		{
-			if(num[i] == p)
-			{
-				n++;
-				swap(num[i],num[p]);
-				 to_p_zero(i);
-				break;
-			}
-		}
-	}
-}
 int main()
 {
 	cin >> N;
-	int p = 0;
-	int nn = 0;
+	int p;
 	for(int i = 0; i < N;i++)
 	{
 		scanf("%d",&num[i]);
@@ -39,22 +17,38 @@ int main()
 	}
 	while(true)
 	{
-		bool flag = true;
-		to_p_zero(p);
-		for(int i = 0; i < N; i++)
+		if(num[0] != 0)
 		{
-			
-			if(num[i]!=i)
+			for(int i = 0; i < N;i++)
 			{
-				flag = false;
-				p = i;
-				swap(num[0],num[i]);
-				n++;
-				break;
+				if(num[i] == p)
+				{
+					swap(num[i],num[p]);
+					p = i;
+					sum++;
+					break;
+				}
 			}
 		}
-		if(flag)
-			break;
+		else
+		{
+			bool flag = false;
+			for(int i = 0; i < N;i++)
+			{
+				if(num[i] != i)
+				{
+					flag = true;
+					p = i;
+					swap(num[0],num[i]);
+					sum++;
+					break;
+				}
+			}
+			if(!flag)
+			{
+				break;
+			}
+		}	
 	}
-		cout << n + nn ;
+	cout << sum;
 }
