@@ -1,5 +1,6 @@
 #include<iostream>
 #include<algorithm>
+#include<string.h>
 #include<cstdio>
 using namespace std;
 int N;
@@ -8,47 +9,38 @@ int num[100001];
 int main()
 {
 	cin >> N;
-	int p;
-	for(int i = 0; i < N;i++)
+	for(int i = 0; i < N; i++)
 	{
-		scanf("%d",&num[i]);
-		if(num[i] == 0)
-			p = i;
+		int t;  scanf("%d",&t);
+		num[t] = i; //num[i] stands for: the element i is on position num[i]  
 	}
+	/*
+	if use num[i] = t;
+	then:
+		num[i] stands for: the position i is element num[i]
+	would make algorithm more complex to find non-order element
+	*/
+	int idx = 0;    //Do not need scan non-order element from begin
 	while(true)
 	{
-		if(num[0] != 0)
-		{
-			for(int i = 0; i < N;i++)
-			{
-				if(num[i] == p)
-				{
-					swap(num[i],num[p]);
-					p = i;
-					sum++;
-					break;
-				}
-			}
+		while( num[0] != 0)
+		{	
+			swap(num[0],num[num[0]]);
+			sum++;
 		}
-		else
+		bool flag = false;
+		for( ; idx < N;idx++)
 		{
-			bool flag = false;
-			for(int i = 0; i < N;i++)
+			if(num[idx] != idx)
 			{
-				if(num[i] != i)
-				{
-					flag = true;
-					p = i;
-					swap(num[0],num[i]);
-					sum++;
-					break;
-				}
-			}
-			if(!flag)
-			{
+				flag = true;
+				swap(num[0],num[idx]);
+				sum++;
 				break;
 			}
-		}	
+		}
+		if(!flag)
+			break;
 	}
 	cout << sum;
 }
