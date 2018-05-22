@@ -14,7 +14,7 @@ int is_insert()
 	for(int i = 1; i < N; i++)
 	{
 		scanf("%d",&result[i]);
-		if(result[i] > result[i-1]&&!flag)
+		if(result[i] >= result[i-1]&&!flag)
 			p = i;
 		else
 			flag = true;
@@ -36,9 +36,9 @@ int main()
 	int p = is_insert();
 	if( p != -1)    //p is the last position of ordered sequence
 	{
-		cout << "Insertion Sort" <<p<<endl<< endl;
+		cout << "Insertion Sort" << endl;
 		/*one more step for insertion sort*/
-	/*	if(p!=N-1)
+		if(p!=N-1)
 		{
 			int i,t = result[p+1];
 			for(i = p+1; i > 0 && result[i-1] > t;i--)
@@ -47,8 +47,8 @@ int main()
 			}
 			result[i] = t;
 		}
-	*/
-		sort(result,result+p+2);
+	
+	//	sort(result,result+p+2);
 	}
 	else
 	{
