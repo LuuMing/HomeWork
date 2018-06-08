@@ -39,6 +39,11 @@ int main()
 {
 	long int N;
 	cin >> N;
+	if(N == 1)
+	{
+		printf("1=1");
+		return 0;
+	}
 	long int o = N;
 	long int t = 1;
 	while(true)
