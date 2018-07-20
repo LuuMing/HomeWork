@@ -1,8 +1,9 @@
 #include<iostream>
 #include<cstdio>
 #include<vector>
+#include<string.h>
 using namespace std;
-#define MAX 105
+#define MAX 150
 int pre[MAX];
 int count[MAX];
 int find(int n)
@@ -27,7 +28,8 @@ void merge(int a, int b)
 }
 int main()
 {
-	int max_n = -1;
+	for(int i = 0; i < MAX;i++)count[i] = 1;
+	int max_n = 1;
 	int K; cin >> K;
 	for(int i = 0; i < MAX ;i++)
 		pre[i] = i;
@@ -43,30 +45,34 @@ int main()
 			scanf("%d",&v[j]);
 			if(v[j] > max_n)
 				max_n = v[j];
-			if(count[v[j]] > m)
+			if(count[find(v[j])] > m)
 			{
-				m = count[v[j]];
+				m = count[find(v[j])];
 				m_g = find(v[j]);			
 			}
-		}	
-		for(int j = 0; j < N;j++)
-		{
-			merge(v[j],m_g);
 		}
+		if(m_g != -1)	
+			for(int j = 0; j < N;j++)
+			{
+				merge(v[j],m_g);
+			}
 	}
-	int n_t = 1;
-	int max_t = -1;
+	bool flag = true;
+	int n_t = 0;
 	for(int i = 1; i <= max_n;i++)
 	{
 		if(pre[i] == i)
-			n_t++;
-	}		
-	for(int i = 1; i <= max_n;i++)
-		if(count[i] > max_t)
-			max_t = count[i];
-	cout << n_t <<' '<< max_t << endl;
+		{
+			n_t++; flag =false;
+		}
+	}
+	if(flag )
+	cout << 1 <<' ';
+	else
+	cout << n_t <<' ';
+	cout << max_n << endl;
 	int q; cin >> q;
-	for(int i =0; i < q;i++)
+	for(int i = 0; i < q;i++)
 	{
 		int a,b; scanf("%d%d",&a,&b);
 		if(find(a) == find(b))
