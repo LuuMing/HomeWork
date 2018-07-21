@@ -3,9 +3,10 @@
 #include<vector>
 #include<string.h>
 using namespace std;
-#define MAX 150
+#define MAX 100010
 int pre[MAX];
 int count[MAX];
+int exist[MAX];
 int find(int n)
 {
 	if(pre[n] == n)
@@ -23,54 +24,44 @@ void merge(int a, int b)
 	if(pre_a == pre_b)
 		return;
 	else
-		pre[a] = pre_b;
-	count[find(b)]++;	
+		pre[pre_a] = pre_b;
 }
 int main()
 {
-	for(int i = 0; i < MAX;i++)count[i] = 1;
-	int max_n = 1;
 	int K; cin >> K;
-	for(int i = 0; i < MAX ;i++)
+	for(int i = 1; i < MAX ;i++)
 		pre[i] = i;
 	for(int i = 0; i < K; i++)
 	{
-		int m_g = -1;
-		int m = -1;
+		int r;
 		int  N; scanf("%d",&N);
-		vector<int> v(N+1);
-		
-		for(int j = 0; j < N; j++)
+		scanf("%d",&r); exist[r] = 1;
+		for(int j = 0; j < N - 1; j++)
 		{
-			scanf("%d",&v[j]);
-			if(v[j] > max_n)
-				max_n = v[j];
-			if(count[find(v[j])] > m)
-			{
-				m = count[find(v[j])];
-				m_g = find(v[j]);			
-			}
+			int t; scanf("%d",&t);
+			exist[t] = 1;
+			merge(r,t);
 		}
-		if(m_g != -1)	
-			for(int j = 0; j < N;j++)
-			{
-				merge(v[j],m_g);
-			}
+
 	}
-	bool flag = true;
-	int n_t = 0;
-	for(int i = 1; i <= max_n;i++)
+	int n_t = 0, n_b = 0;
+	for(int i = 1; i <= MAX;i++)
 	{
-		if(pre[i] == i)
+		if(exist[i])
 		{
-			n_t++; flag =false;
+			int t = find(i);
+			count [t]++;
 		}
 	}
-	if(flag )
-	cout << 1 <<' ';
-	else
-	cout << n_t <<' ';
-	cout << max_n << endl;
+	for(int i = 1; i <= MAX ;i++)
+	{
+		if(count[i] != 0 && exist[i])
+		{
+			n_t ++;
+			n_b += count[i];
+		}
+	}
+	cout << n_t <<' '<<n_b << endl;
 	int q; cin >> q;
 	for(int i = 0; i < q;i++)
 	{
