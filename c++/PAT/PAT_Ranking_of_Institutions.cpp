@@ -28,9 +28,13 @@ bool cmp(const school & s1, const school & s2)
 	{
 		return t1 > t2;
 	}
-	else
+	else if (s1.num != s2.num)
 	{
 		return s1.num < s2.num;
+	}
+	else
+	{
+		return s1.name < s2.name;
 	}
 }
 
@@ -41,7 +45,7 @@ int main()
 	{
 		char id[10];
 		int score;
-		 char s[5];
+		 char s[10];
 		 scanf("%s%d%s",id,&score,s);
 		for(int j = 0;s[j]!=0;j++) s[j] = tolower(s[j]);
 		if(id[0] == 'B')
