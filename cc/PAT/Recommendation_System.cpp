@@ -1,41 +1,47 @@
-/***********************
-	@date:2018/8/6 09:40~ 09:55 + 10:43~10：57
-	@author: LuMing
-***********************/
-#include<vector>
-#include<algorithm>
-#include<unordered_map>
 #include<iostream>
+#include<algorithm>
+#include<set>
+#define MAX 50002
 using namespace std;
-unordered_map<int,int> m;
-vector<pair<int,int>> v;
-bool cmp(const pair<int,int> & p1, const pair<int,int> & p2)
+struct node
 {
-	if( p1. second != p2.second)
-		return p1.second > p2.second;
-	else
-		return p1.first < p2.first;
-}
+	int idx;
+	int cnt;
+	bool operator < (const node & n2) const 
+	{
+		return cnt != n2.cnt? cnt > n2.cnt:idx < n2.idx;
+	}
+};
+set<node> s;
+int num[MAX];
 int N,K;
 int main()
 {
 	cin >> N >> K;
-	int i0;
-	cin >> i0;
-	m[i0]++;
+	int e1; cin >> e1; 
+	node t;
+	t.idx = e1;
+	t.cnt = 1;
+	s.insert(t);
+	num[e1]++;
 	for(int i = 1; i < N; i++)
 	{
-		int t; scanf("%d",&t);
-		v.clear();
-		for(auto ii:m)
-			v.push_back(ii);
-		sort(v.begin(),v.end(),cmp);
-		printf("%d:",t);
-		for(int j = 0; j < v.size() && j < K;j++)
+		int k = 0;
+		int elem_idx; scanf("%d",&elem_idx);
+		printf("%d:",elem_idx);
+		for(auto jj = s.begin(); jj != s.end() && k < K; jj++,k++)
 		{
-			printf(" %d",v[j].first);
+			printf(" %d",jj->idx);
 		}
-		m[t]++;
 		printf("\n");
+		t.idx = elem_idx; t.cnt = num[elem_idx];
+		auto it = s.find(t);
+		if(it != s.end())
+		{
+			s.erase(it);
+		}
+		num[elem_idx]++;
+		t.idx = elem_idx; t.cnt = num[elem_idx];
+		s.insert(t);
 	}
 }
