@@ -1,3 +1,4 @@
+
 /*************************
 	@date:18/8/7 20:13 ~ 20:37
 	@author: LuMing
@@ -16,23 +17,14 @@ int main()
 	for(int i = 1; i <= M; i++)
 	{
 		scanf("%s",name);
-		if(num< S)
+		if(s.count(name))    // important operation
+			S += 1;
+		if(i==S && !s.count(name))
 		{
-			continue; num++;
-		}
-		if(s.count(name))
-		{
-			continue;
-		}
-		else
-		{
-			num++;
-			if( (num-S) % N == 0)
-			{
-				printf("%s\n",name);
-				s.insert(name);
-				has = true;
-			}
+			s.insert(name);
+			printf("%s\n",name);
+			S += N;
+			has = true;
 		}
 	}
 	if( !has)
