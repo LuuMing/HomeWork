@@ -1,65 +1,62 @@
 /*****************
 	@author: LuMing
-	@date: 18/8/24 19:50~20:26
+	@date: 18/8/25 21:32~22:28
 *****************/
 #include<iostream>
 #include<vector>
 #include<math.h>
-#include<algorithm>
 using namespace std;
-vector<int> tmp;
-int tmp_total = 0;
-vector<int> result;
-int result_max;
+#define MAX 401
 int N,K,P;
-bool found = false;
-bool cmp(const int & i1, const int & i2)
+int total;
+vector<int> tmp,f;
+vector<int> result;
+int tmp_total;
+void dfs(int s,int stp) // dfs from big to small number
 {
-	return i1 > i2;
-}
-void dfs(int N,int stp)
-{
-
-	if(stp == K && N == 0)
+	if(tmp.size() > K || s > N)
+		return;
+	if(s == N && tmp.size() == K)
 	{
-		if(tmp_total > result_max)
+		if(tmp_total > total)
 		{
-			result_max = tmp_total;
+			total = tmp_total;
 			result = tmp;
 		}
 		return;
 	}
-	if(N < 0 || stp >= K )
-		return;
-	for(int i = N-1; i >= 1; i--)
+	
+	if(stp  - 1 >= 0)
 	{
-		tmp.push_back(i);
-		tmp_total += i;
-		dfs(N - pow(i,P),stp+1);
-		tmp_total -= i;
+		tmp.push_back(stp);
+		tmp_total += stp;
+		dfs(s+f[stp],stp);
 		tmp.pop_back();
+		tmp_total -= stp;
+		dfs(s,stp - 1);
 	}
-
 }
 int main()
 {
 	cin >> N >> K >> P;
-	dfs(N,0);
-	if(result.size() > 0)
+	int tmp = 0;
+	int i = 0;
+	while(tmp <= N)
 	{
-		sort(result.begin(),result.end(),cmp);
-		printf("%d = ",N);
-		for(int i = 0; i < result.size();i++)
-		{
-			printf("%d^%d",result[i],P);
-			if(i!=result.size()-1)
-			{	
-				printf(" + ");
-			}
-		}
+		f.push_back(tmp);
+		tmp = pow(++i,P);	
 	}
-	else
+	dfs(  0	,f.size() - 1);
+	if(result.size() != 0)
 	{
-		cout << "Impossible";
+		printf("%d = %d^%d", N, result[0], P);
+       		for (int i = 1; i < result.size(); i++)
+            		printf(" + %d^%d", result[i], P);
+		printf("\n");
+
+        }
+       	else
+	{
+		cout << "Impossible" << endl;
 	}
 }
