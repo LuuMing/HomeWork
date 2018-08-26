@@ -1,34 +1,40 @@
-
-/*************************
-	@date:18/8/7 20:13 ~ 20:37
-	@author: LuMing
-*************************/
 #include<iostream>
 #include<unordered_set>
 using namespace std;
-unordered_set<string>s;
+unordered_set<string> s;
 int M,N,S;
 int main()
 {
 	cin >> M >> N >> S;
-	char name[22];
-	bool has = false;
-	int num = 1;
-	for(int i = 1; i <= M; i++)
+	int start = 0;
+	int next = S;
+	bool flag = true;
+	for(int i = 0; i < M; i++)
 	{
-		scanf("%s",name);
-		if(s.count(name))    // important operation
-			S += 1;
-		if(i==S && !s.count(name))
+		string tmp;
+		cin >> tmp;
+		if(++start < S)
 		{
-			s.insert(name);
-			printf("%s\n",name);
-			S += N;
-			has = true;
+			continue;
 		}
-	}
-	if( !has)
-		printf("Keep going...\n");
-
-
+		else
+		{
+			if( s.count(tmp) )
+			{
+				start--;
+			}
+			else
+			{
+				if(start == next)
+				{
+					cout << tmp << endl;
+					next += N;
+					s.insert(tmp);
+					flag = false;
+				}
+			}
+		}
+	}		
+	if(flag)
+		cout << "Keep going...";
 }
