@@ -6,6 +6,8 @@
 #include<algorithm>
 #include<string.h>
 #include<unordered_map>
+#include<vector>
+#include<set>
 using namespace std;
 int N,M;
 struct record
@@ -13,11 +15,11 @@ struct record
 	char name[10];
 	int hh,mm,ss;
 	char state[5];
-	bool valid = false;
 };
-unordered_map<string,int> s;
 record r[10001];
-int num[25*61*61];
+vector<record> valid;
+unordered_map<string,int> s;
+unordered_map<string,int> m;
 bool cmp(const record & r1, const record & r2)
 {
 	if(r1.hh != r2.hh)
@@ -29,8 +31,6 @@ bool cmp(const record & r1, const record & r2)
 	else
 		return r1.ss < r2.ss;
 }
-
-unordered_map<string,record> m;
 unordered_map<string,int>  total;
 int main()
 {
@@ -48,56 +48,69 @@ int main()
 		}
 		if(s.count(r[i].name) && strcmp(r[i].state,"out") == 0)
 		{
-			r[s[r[i].name]].valid = true;
-			r[i].valid = true;
+			
+			valid.push_back(r[s[r[i].name]]);
+			valid.push_back(r[i]);
 			s.erase(r[i].name);
 		}
 	}
+	sort(valid.begin(),valid.end(),cmp);
+	int T = 0;
 	int cnt = 0;
-	int Time = 0;
-	for(int i = 0; i < N; i++)
-	{
-
-
-		if( !m.count( r[i].name) && strcmp(r[i].state,"in") == 0 &&r[i].valid)
-		{
-		
-			for(; Time <= r[i].hh *3600 + r[i].mm * 60 + r[i].ss;Time++) 
-				num[Time] = cnt;	
-			m[r[i].name] = r[i];
-				cnt++;	
-		}
-		if( m.count(r[i].name) && strcmp(r[i].state, "out")==0 &&r[i].valid)
-		{
-			for(; Time <= r[i].hh *3600 + r[i].mm * 60 + r[i].ss;Time++) 
-				num[Time] = cnt;	
-			string id = r[i].name;
-			total[id] += r[i].hh*3600 + r[i].mm * 60 + r[i].ss - m[id].hh * 3600 - m[id].mm * 60 - m[id].ss; 
-		
-			m.erase(id);
-			cnt--;	
-		}
-			
-	}
 	for(int i = 0; i < M; i++)
 	{
-		int hh,mm,ss;
-		scanf("%d:%d:%d",&hh,&mm,&ss);	
-		printf("%d\n",num[hh*3600+mm*60+ss]);
+		int hh,mm,ss; scanf("%d:%d:%d",&hh,&mm,&ss);
+		while(T <= hh *3600 + mm*60+ss)
+		{
+			while(true)
+			{
+				if(valid.empty())
+					break;
+				int now = valid[0].hh * 3600 + valid[0].mm*60+ valid[0].ss;
+				if(now != T)
+					break;
+				else
+				{
+					if(strcmp(valid[0].state,"in") == 0)
+					{
+						cnt++;
+						m[valid[0].name] = now;
+					}	
+					else
+					{
+						cnt--;
+						total[valid[0].name] += now - m[valid[0].name];
+					}
+					valid.erase(valid.begin());
+				}
+			}
+			
+			T++;
+		}
+		printf("%d\n",cnt);
 	}
-	vector<string> vv;
-	int total_time = 0;
-	for(auto i: total)
+	int longest = 0;
+	set<string> vv;
+	for(auto i:total)
 	{
-		if(i.second > total_time)
+		if( i.second > longest)
 		{
 			vv.clear();
-			vv.push_back(i. first);
-			total_time = i.second;
+			longest = i.second;
+			vv.insert(i.first);
 		}
-		else if (i.second == total_time)
-		{
-			vv.push_back(i.first);
+		else if (i.second == longest)
+		{	
+			vv.insert(i.first);
 		}
 	}
+	for(auto i : vv)
+	{
+		cout << i <<' ';
+	}
+	int h = longest / 3600;
+	int m = (longest - h * 3600) / 60;
+	int s =  longest - h * 3600 - m * 60;
+	printf("%02d:%02d:%02d\n",h,m,s);
+	return 0;
 }
