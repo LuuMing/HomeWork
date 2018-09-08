@@ -1,31 +1,46 @@
 class Solution {
-	vector<int>  tmp;
-	vector<vector<int>> result;
-	int sum = 0;
-	void dfs(vector<int> & nums,int idx)
-	{
-		tmp.push_back(nums[idx]);
-		sum += nums[idx];
-		if(sum == 0 && tmp.size() == 3)
-		{
-			result.push_back(tmp);
-		}
-		if(tmp.size() < 3&& idx + 1 < nums.size())
-		{
-			dfs(nums,idx+1);
-		}
-		else
-		{
-			result.pop_back();
-			if(idx  <nums.size())
-				dfs(nums,idx+1);
-		}
-		
-	}
+    set<set<int>> ss;
+    vector<vector<int>> result;
+    void find_2(int num,int idx, vector<int> & nums)
+    {
+        unordered_set<int> s;
+        vector<int> v;
+        v.push_back(num);
+        for(int i = 0; i < nums.size(); i++)
+        {
+            if(i == idx)
+                continue;
+            if( s.count(-num - nums[i]))
+            {
+                set<int> s;
+                s.insert(num);
+                s.insert(nums[i]);
+                s.insert(-num-nums[i]);
+                if(ss.count(s))
+                    continue;
+                ss.insert(s);
+                vector<int> vv = v;
+                vv.push_back(nums[i]);
+                vv.push_back(-num - nums[i]);
+                for(int j = 0; j < vv.size(); j++)
+                {
+                    cout << vv[j] <<' ';
+                }
+                cout << endl;
+                result.push_back(vv);
+            }
+            else
+            {
+                s.insert(nums[i]);
+            }
+        }
+         
+    }
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
-			sort(nums.begin(),nums.end());
-			dfs(nums,0);
-			return result;
+        for(int i = 0; i < nums.size(); i++)
+            find_2(nums[i],i,nums);
+        return result;
     }
 };
+
