@@ -24,15 +24,16 @@ int main()
 	char pattern[1000];
 	while(scanf("%s",text)!=0)
 	{
-		int r_l = -1, r_r = -1;
+		int l = -1, r = -1;
 		int idx = 0;
 		scanf("%s",pattern);
 		size = strlen(text);
+		int gap = 9999;
 		for(int i = 0; i < size; i++)
 		{
+			int tmp_l = -1,tmp_r = -1;
 			if(text[i] == pattern[idx])
 			{	
-				r_l = i;
 				int count = strlen(pattern);
 				int tmp_idx = idx+1;
 				for(int j = i + 1; j < size;j++ )
@@ -41,14 +42,17 @@ int main()
 					{
 						tmp_idx ++;
 					}
-					if(tmp_idx > count- 1)
+					if(tmp_idx > count- 1 && j - i < gap)
 					{
-						r_r = j;
-					cout << r_l <<' '<< r_r << endl;
+						gap = j - i;
+						l = i;
+						r = j;
 						break;
 					}
 				}
 			}
+	
 		}
+		cout << l << ' ' << r << endl;
 	}
 }
