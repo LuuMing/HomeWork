@@ -1,7 +1,5 @@
 package stack;
 
-import stack.Stack.Node;
-
 public abstract class Stack <T>{
 	protected Node _head;
 	protected class Node<T>{
