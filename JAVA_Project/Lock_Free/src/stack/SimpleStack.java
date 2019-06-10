@@ -8,8 +8,7 @@ public class SimpleStack<T> extends Stack<T> {
 	}
 	
 	public void Push(T item) {
-		Node<T> node = new Node<T>();
-		node.item = item;
+		Node<T> node = new Node<T>(item);
 		node.next = _head.next;
 		_head.next = node;
 	}

@@ -1,5 +1,4 @@
 package stack;
-import java.util.stream.IntStream;
 
 class StackTest {
 	private Boolean [] poped;
@@ -7,6 +6,7 @@ class StackTest {
 		for(int i = 0;i < 5000; i++) {
 			Stack.Push(i);
 		}
+		System.out.println("current stack:" + Stack);
 		poped = new Boolean[5001];
 		Thread threads [] = new Thread[5000];
 		for(int i = 0; i < 5000; i++) {
@@ -23,8 +23,8 @@ class StackTest {
 				e.printStackTrace();
 			}
 		}
-		System.out.print(Stack);
-		System.out.print("Done");
+		System.out.println(Stack);
+		System.out.println("Done");
 	}
 	
 	private class popThread extends Thread{

@@ -4,8 +4,7 @@ public class SimpleLockedStack<T> extends Stack<T> {
 	@Override
 	void Push(T item) {
 		synchronized(_head) {
-			Node<T> node = new Node<T>();
-			node.item = item;
+			Node<T> node = new Node<T>(item);
 			node.next = _head.next;
 			_head.next = node;
 		}

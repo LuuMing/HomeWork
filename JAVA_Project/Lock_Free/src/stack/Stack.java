@@ -5,6 +5,11 @@ public abstract class Stack <T>{
 	protected class Node<T>{
 		public T item;
 		public Node<T> next;
+		public Node() {
+		}
+		public Node(T _item){ 
+			this.item = _item;
+		}
 	}
 	abstract void Push(T item);
 	abstract T Pop();
