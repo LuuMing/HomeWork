@@ -10,23 +10,27 @@
 static unsigned char mem[100];
 static int written_count = 0;
 static DEFINE_RWLOCK(rwlock);
-
+struct rw_semaphore rw_sem;
 static ssize_t whoamiread(struct file * file, char __user *buf, size_t count, loff_t *ppos)
 {
-	read_lock(&rwlock);
+	//read_lock(&rwlock);
+	down_read(&rw_sem);
 	copy_to_user(buf, (void*)mem, written_count);
 	mdelay(5000);
 	printk("read count: %d",(int)written_count);
-	read_unlock(&rwlock);
+	//read_unlock(&rwlock);
+	up_read(&rw_sem);
 	return written_count;
 }
 
 static ssize_t whoamiwrite(struct file * file, const char __user *buf, size_t count, loff_t *ppos)
 {
-	write_lock(&rwlock);
+	//write_lock(&rwlock);
+	down_write(&rw_sem);
 	copy_from_user(mem, buf,count);
 	mdelay(5000);
-	write_unlock(&rwlock);
+	up_write(&rw_sem);
+	//write_unlock(&rwlock);
 	written_count = count;
 	return count;
 }
@@ -41,6 +45,7 @@ static int word_count_init(void)
 	int ret;
 	ret = misc_register(&misc);
 	printk("whoami init  success\n");
+	init_rwsem(&rw_sem);
 	return ret;
 }
 static void word_count_exit(void)
